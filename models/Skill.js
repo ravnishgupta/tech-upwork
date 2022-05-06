@@ -15,28 +15,12 @@ Skill.init(
             type: DataTypes.STRING(30),
             allowNull: false,
             unique: true 
-        },
-        userID: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            references: {
-              model: 'user',
-              key: 'id'
-            }
-          },
-          projectID: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            references: {
-              model: 'project',
-              key: 'id'
-            }
-          },
+        }
     },
     {   sequelize,
         timestamps: false,
         freezeTableName: true,
-        underscored: true,
+        underscored: false,
         modelName: 'skill'
     }
 )
