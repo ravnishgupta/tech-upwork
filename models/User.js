@@ -6,14 +6,19 @@ class User extends Model {}
 
 User.init(
     {
+      
       id: {
         type: DataTypes.INTEGER,
         allowNull: false,
         primaryKey: true,
         autoIncrement: true
       },
-      username: {
-        type: DataTypes.STRING,
+      firstName : {
+        type : DataTypes.STRING(30),
+        allowNull: false
+      },
+      lastName : {
+        type : DataTypes.STRING(30),
         allowNull: false
       },
       email: {
@@ -44,14 +49,14 @@ User.init(
         allowNull: false,
         defaultValue: 1 //available by default
       },
-      chargePerHour: {
+      hourlyRate: {
           type: DataTypes.FLOAT,
           allowNull: false,
           defaultValue: 0
       },
-      skillSet: {
-          type: DataTypes.JSON,
-          allowNull: false
+      resume: {
+        type: DataTypes.BLOB,
+        allowNull: true
       }
     },
 
