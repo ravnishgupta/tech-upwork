@@ -13,8 +13,9 @@ router.get('/', (req, res) => {
 router.post('/', (req, res) => {
   
   Skill.create({
-    
+   
     description: req.body.description,
+   
 })
     .then(dbSkillData => res.json(dbSkillData))
     .catch(err => {

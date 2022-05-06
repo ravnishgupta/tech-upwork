@@ -1,5 +1,7 @@
 const router = require('express').Router();
-const { Project } = require('../../models');
+const { Project,
+// Skill
+} = require('../../models');
 
 router.get('/', (req, res) => {
   Project.findAll()
@@ -18,7 +20,7 @@ router.post('/', (req, res) => {
     payPerHour: req.body.payPerHour,
     startDate: req.body.startDate,
     endDate: req.body.endDate,
-    skillRequired: req.body.skillRequired,
+    // skillRequired: req.body.skillRequired,
   })
     .then(dbProjectData => res.json(dbProjectData))
     .catch(err => {

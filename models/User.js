@@ -1,6 +1,6 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
-const bcrypt = require('bcrypt');
+// const bcrypt = require('bcrypt');
 
 class User extends Model {}
 
@@ -35,13 +35,13 @@ User.init(
           len: [4]
         }
       },
-      github: {
+      gitHub: {
           type: DataTypes.STRING(30),
           allowNull: false,
           unique: true,
-          validate: {
-              isUrl: true
-          }
+          // validate: {
+          //     isUrl: true
+          // }
       },
       isAvailable: {
         type: DataTypes.BOOLEAN,
@@ -60,17 +60,18 @@ User.init(
     },
 
     {
-        hooks: {
-            async beforeCreate(newUserData) {
-                newUserData.password = await bcrypt.hash(newUserData.password, 10);
-                return newUserData;
-            },
-            async beforeUpdate(updatedUserData) {
-                updatedUserData.password = await bcrypt.hash(updatedUserData.password, 10);
-                return updatedUserData;
-            } 
+        // hooks: {
+        //     async beforeCreate(newUserData) {
+        //         newUserData.password = await bcrypt.hash(newUserData.password, 10);
+        //         return newUserData;
+        //     },
+        //     async beforeUpdate(updatedUserData) {
+        //         updatedUserData.password = await bcrypt.hash(updatedUserData.password, 10);
+        //         return updatedUserData;
+        //     } 
              
-        },
+        // },
+
         sequelize,
         timestamps: false,
         freezeTableName: true,
