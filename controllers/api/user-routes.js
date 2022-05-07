@@ -45,7 +45,7 @@ router.post('/', (req, res) => {
     email: req.body.email,
     password: req.body.password,
     gitHub: req.body.gitHub,
-    isAvaiable: req.body.isAvaiable,
+    isAvailable: req.body.isAvailable,
     hourlyRate: req.body.hourlyRate,
     resume: req.body.resume
     // Skill:....
