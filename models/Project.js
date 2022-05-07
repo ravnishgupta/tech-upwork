@@ -42,4 +42,4 @@ Project.init(
         }
 )
 
-module.exports = project;
+module.exports = Project;
