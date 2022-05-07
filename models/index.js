@@ -11,7 +11,7 @@ Skill.belongsToMany(User, {through: UserSkill, foreignKey: 'skillId'});
 Project.belongsToMany(Skill, {through: ProjectSkill, foreignKey: 'projectId'});
 Skill.belongsToMany(Project, {through: ProjectSkill, foreignKey: 'skillId'});
 
-// Project.hasMany(User, {foreignKey: 'userId'})
-
+// Project.hasMany(User, {foreignKey: 'userId'});
+// User.belongsTo(Project, {foreignKey:'projectId'});
 
 module.exports = { User, Project, Skill, ProjectSkill, UserSkill };
