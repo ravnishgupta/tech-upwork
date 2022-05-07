@@ -39,9 +39,9 @@ User.init(
           type: DataTypes.STRING(30),
           allowNull: false,
           unique: true,
-          // validate: {
-          //     isUrl: true
-          // }
+          validate: {
+              isUrl: true
+          }
       },
       isAvailable: {
         type: DataTypes.BOOLEAN,
@@ -56,21 +56,25 @@ User.init(
       resume: {
         type: DataTypes.BLOB,
         allowNull: true
+      },
+      aboutMe: {
+        type: DataTypes.STRING,
+        allowNull: true
       }
     },
 
     {
-        // hooks: {
-        //     async beforeCreate(newUserData) {
-        //         newUserData.password = await bcrypt.hash(newUserData.password, 10);
-        //         return newUserData;
-        //     },
-        //     async beforeUpdate(updatedUserData) {
-        //         updatedUserData.password = await bcrypt.hash(updatedUserData.password, 10);
-        //         return updatedUserData;
-        //     } 
+        hooks: {
+            async beforeCreate(newUserData) {
+                newUserData.password = await bcrypt.hash(newUserData.password, 10);
+                return newUserData;
+            },
+            async beforeUpdate(updatedUserData) {
+                updatedUserData.password = await bcrypt.hash(updatedUserData.password, 10);
+                return updatedUserData;
+            } 
              
-        // },
+        },
 
         sequelize,
         timestamps: false,
