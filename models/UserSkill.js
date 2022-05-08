@@ -37,4 +37,4 @@ UserSkill.init(
     }
 );
 
-module.exports = "UserSkill"
+module.exports = UserSkill;

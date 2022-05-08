@@ -36,4 +36,4 @@ ProjectSkill.init(
     }
 );
 
-module.exports = "ProjectSkill";
+module.exports = ProjectSkill;
