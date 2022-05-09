@@ -77,8 +77,8 @@ router.get('/talents', async (req, res) => {
         lastname: "Peters",
         email: "fake3@email.com",
         gitHub :"fake3@email.com",
-        isAvailable :'12-31-2022',
-        hourlyRate: false,
+        isAvailable :false,
+        hourlyRate: 100,
         aboutMe: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Repellendus natus aspernatur ab tempore, veritatis hic fugit, illo, provident expedita repellat ipsam? A facilis voluptate, commodi eveniet, totam dicta, pariatur perferendis asperiores architecto repellendus harum molestiae quis qui ipsum veniam fugiat quaerat. Alias enim aliquam possimus omnis ipsum saepe sapiente rem corrupti commodi id. Ratione, dicta iure. Impedit corrupti odit ullam quis minus, earum ipsam aliquid harum sapiente dolor! Quam velit pariatur et sint rem quas, in eveniet iusto, assumenda tempore beatae ipsa eius reprehenderit fuga accusamus animi, praesentium ratione dicta ullam est numquam. Minus ratione, animi aperiam placeat non distinctio!",
         skills: ['C#', 'Kubernetes', 'Docker']
     }
