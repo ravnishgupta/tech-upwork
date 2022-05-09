@@ -1,7 +1,19 @@
 const router = require('express').Router();
+const multer = require('multer');
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 
 router.get('/', async (req, res) => {
     res.render('signup');	
+});
+
+router.get('/file', async (req, res) => {
+    res.render('file');	
+});
+
+router.post('/fupload', upload.single('file-upload'), function(req, res, next){
+    console.log(req.file);
+
 });
 
 router.get('/projects', async (req, res) => {
