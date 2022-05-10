@@ -11,7 +11,7 @@ ProjectSkill.init(
             primaryKey: true,
             autoIncrement: true
         },
-        skillID: {
+        skillId: {
             type: DataTypes.INTEGER,
             allowNull: false,
             references: {
@@ -19,7 +19,7 @@ ProjectSkill.init(
               key: 'id'
             }
         },
-        projectID: {
+        projectId: {
             type: DataTypes.INTEGER,
             allowNull: false,
             references: {
