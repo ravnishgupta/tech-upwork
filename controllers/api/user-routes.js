@@ -1,13 +1,13 @@
 const router = require('express').Router();
-const { User, 
-  //  Skill
- } = require('../../models');
+const { User, Skill, UserSkill} = require('../../models');
 
 // get all users
 router.get('/', (req, res) => {
   User.findAll({
     attributes: { exclude: ['password'] },
-    // include: {model: Skill, attributes: ['description'] }
+    include: [
+      {model: Skill, attributes: ['description']}
+    ]
   })
     .then(dbUserData => res.json(dbUserData))
     .catch(err => {
@@ -22,7 +22,9 @@ router.get('/:id', (req, res) => {
     where: {
       id: req.params.id
     },
-    // include: {model: Skill, attributes: ['description'] }
+    include: [
+      {model: Skill, attributes: ['description']}
+    ]
   })
     .then(dbUserData => {
       if (!dbUserData) {
@@ -37,23 +39,40 @@ router.get('/:id', (req, res) => {
     });
 });
 
-router.post('/', (req, res) => {
-  // expects {username: 'Lernantino', email: 'lernantino@gmail.com', password: 'password1234'}
-  User.create({
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
-    email: req.body.email,
-    password: req.body.password,
-    gitHub: req.body.gitHub,
-    isAvailable: req.body.isAvailable,
-    hourlyRate: req.body.hourlyRate,
-    resume: req.body.resume
-    // Skill:....
-  })
-    .then(dbUserData => res.json(dbUserData))
-    .catch(err => {
+// router.post('/', (req, res) => {
+//   // expects {username: 'Lernantino', email: 'lernantino@gmail.com', password: 'password1234'}
+//   User.create({
+//     firstName: req.body.firstName,
+//     lastName: req.body.lastName,
+//     email: req.body.email,
+//     password: req.body.password,
+//     gitHub: req.body.gitHub,
+//     isAvailable: req.body.isAvailable,
+//     hourlyRate: req.body.hourlyRate,
+//     resume: req.body.resume
+//     // Skill:....
+//   })
+//     .then(dbUserData => res.json(dbUserData))
+//     .catch(err => {
+//       console.log(err);
+//       res.status(500).json(err);
+//     });
+// });
+
+router.post('/', (req, res) =>{
+  User.create(req.body)
+    .then((user) =>{
+      if (req.body.skillId.length) {
+        const userSkillArr = req.body.skillId.map((skillId) => {return{userId: user.id, skillId};});
+        return UserSkill.bulkCreate(userSkillArr);
+      }
+       // if no product tags, just respond
+       res.status(200).json(user);
+    })
+    .then((userSkillIds) => res.status(200).json(userSkillIds))
+    .catch((err) => {
       console.log(err);
-      res.status(500).json(err);
+      res.status(400).json(err);
     });
 });
 
