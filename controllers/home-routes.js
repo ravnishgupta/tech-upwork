@@ -4,6 +4,7 @@ router.get('/', async (req, res) => {
     res.render('signup');	
 });
 
+
 router.get('/projects', async (req, res) => {
 
      const projects=[{
@@ -86,5 +87,6 @@ router.get('/talents', async (req, res) => {
 
     res.render('talents', {talents});	
 });
+
 
 module.exports = router;
