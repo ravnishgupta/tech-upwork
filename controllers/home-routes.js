@@ -8,9 +8,12 @@ const { User, Resume
     //  Skill
    } = require('../models');
 router.get('/', async (req, res) => {
+    res.render('login');	
+});
+
+router.get('/signup', async (req, res) => {
     res.render('signup');	
 });
-<<<<<<< HEAD
 
 router.get('/file', async (req, res) => {
     res.render('file');	
@@ -77,11 +80,9 @@ async function saveData(req, res)
 
     
 }
-=======
 router.get('/login', async (req, res) => {
     res.render('login');	
 });
->>>>>>> a2ac69cb6c5d42a9a977daf3e5b6b174bdf42c51
 
 router.get('/projects', async (req, res) => {
 

@@ -40,7 +40,7 @@ const signUpHandler = async (event)=>{
 
         if(response.ok)
         {
-           document.location.reload();
+            document.location.replace('/projects');
         }
         else{
             console.log(response.statusText);
