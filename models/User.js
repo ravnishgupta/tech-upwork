@@ -60,6 +60,10 @@ User.init(
       aboutMe: {
         type: DataTypes.STRING,
         allowNull: true
+      },
+      userType: {
+        type: DataTypes.STRING,
+        allowNull: true
       }
     },
 
