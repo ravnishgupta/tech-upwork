@@ -40,8 +40,6 @@ router.post('/', (req, res) => {
     payPerHour: req.body.payPerHour,
     startDate: req.body.startDate,
     endDate: req.body.endDate,
-    userType: req.body.userType
-    // skillRequired: req.body.skillRequired,
   })
     .then(dbProjectData => res.json(dbProjectData))
     .catch(err => {
