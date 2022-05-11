@@ -11,7 +11,7 @@ UserSkill.init(
             primaryKey: true,
             autoIncrement: true
         },
-        skillID: {
+        skillId: {
             type: DataTypes.INTEGER,
             allowNull: false,
             references: {
@@ -19,7 +19,7 @@ UserSkill.init(
               key: 'id'
             }
         },
-        userID: {
+        userId: {
             type: DataTypes.INTEGER,
             allowNull: false,
             references: {
