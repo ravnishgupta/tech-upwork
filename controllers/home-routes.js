@@ -7,13 +7,10 @@ const stream = require("stream");
 const { User, Resume
     //  Skill
    } = require('../models');
-const { strictEqual } = require('assert');
-const { response } = require('express');
-  
-   const output= "../data/temp/x.txt";
 router.get('/', async (req, res) => {
     res.render('signup');	
 });
+<<<<<<< HEAD
 
 router.get('/file', async (req, res) => {
     res.render('file');	
@@ -80,6 +77,11 @@ async function saveData(req, res)
 
     
 }
+=======
+router.get('/login', async (req, res) => {
+    res.render('login');	
+});
+>>>>>>> a2ac69cb6c5d42a9a977daf3e5b6b174bdf42c51
 
 router.get('/projects', async (req, res) => {
 
@@ -163,6 +165,5 @@ router.get('/talents', async (req, res) => {
 
     res.render('talents', {talents});	
 });
-
 
 module.exports = router;
