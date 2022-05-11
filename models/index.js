@@ -3,6 +3,7 @@ const Project = require("./Project");
 const Skill = require('./Skill');
 const ProjectSkill = require('./ProjectSkill')
 const UserSkill = require('./UserSkill')
+const Resume = require('./Resume')
 const Apply = require("./Apply")
 
 
@@ -18,9 +19,12 @@ Project.belongsToMany(Skill, {through: ProjectSkill, foreignKey: 'projectId'});
 Skill.belongsToMany(Project, {through: ProjectSkill, foreignKey: 'skillId'});
 
 
-<<<<<<< HEAD
-module.exports = { User, Project, Skill, ProjectSkill, UserSkill, Apply};
-=======
-module.exports = { User, Project, Skill, ProjectSkill, UserSkill };
 
->>>>>>> d70c5df1c078ee30f955fef47b01580c55e2794e
+Resume.belongsTo(User, 
+    {foreignKey: 'user_id'});
+
+// Project.hasMany(User, {foreignKey: 'userId'});
+// User.belongsTo(Project, {foreignKey:'projectId'});
+
+module.exports = { User, Project, Skill, ProjectSkill, UserSkill, Resume , Apply};
+

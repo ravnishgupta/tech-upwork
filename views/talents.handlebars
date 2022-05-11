@@ -31,9 +31,13 @@
                     <div class="p-5 border border-b-0 border-gray-100 dark:border-gray-700 dark:bg-gray-100">
                       <p class="mb-2 text-gray-500 dark:text-gray-400 bg-white">{{talent.aboutMe}}</p>
                       <p class="mb-2 text-gray-800 dark:text-gray-400 bg-white" > Skills: {{talent.skills}}</p>
-                      <a href="mailto:{{talent.email}}" data-id="{{talent.id}}" type="click" class="py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 
-                                  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Contact</a>     
+                      <div class="flex justify-between">
+                        <a href="mailto:{{talent.email}}" data-id="{{talent.id}}" type="click" class="py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 
+                                  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Contact</a>    
+                        <button data-id="{{talent.id}}" id="review-button" type="click" class=" py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Review Resume</button>     
+                      </div>
                     </div>
+                 
                   </div>
                 {{/each}}
             </div> 
@@ -42,3 +46,5 @@
       </section>
     </main>
   </div>
+
+    <script src="/javascript/talents.js"></script>
