@@ -1,4 +1,4 @@
-const signUpHandler = async(req, res) =>{
+const signUpHandler = async (event)=>{
     event.preventDefault();
 
     const firstName = document.querySelector('#first-name').value.trim(); 
@@ -10,34 +10,32 @@ const signUpHandler = async(req, res) =>{
     const hourlyRate = document.querySelector('#price').value.trim(); 
 
     //To do implement file save
-    const resume ="";
+    const resume =document.getElementById("file-upload");
     let skills =[];
-
- 
+`   `
     const skillsList = document.getElementById('skill').selectedOptions;
     for(var i=0; i< skillsList.length; i++)
     {   
         skills.push(skillsList[i].label); 
     }
+
+    const formData = new FormData();
+    formData.append("firstName", firstName);
+    formData.append("lastName", lastName);
+    formData.append("email", email);
+    formData.append("password", password);
+    formData.append("gitHub", gitHub);
+    formData.append("isAvailable", isAvailable);
+    formData.append("hourlyRate", hourlyRate);
+    formData.append("skills", skills);
+    formData.append("resume", resume.files[0]);
+
    
     if(firstName && lastName && email && password)
     {
-        const response = await fetch('/api/users',{
+        const response = await fetch('/fupload',{
             method: 'POST',
-            body: JSON.stringify({
-                firstName,
-                lastName,
-                email,
-                password,
-                gitHub,
-                isAvailable,
-                hourlyRate,
-                resume,
-                skills
-            }),
-            headers: {
-                'Content-Type': 'application/json'
-            }
+            body: formData
         });
 
         if(response.ok)

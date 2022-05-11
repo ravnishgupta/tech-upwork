@@ -2,7 +2,15 @@ const router = require('express').Router();
 const multer = require("multer");
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
-
+const fs = require("fs");
+const stream = require("stream");
+const { User, Resume
+    //  Skill
+   } = require('../models');
+const { strictEqual } = require('assert');
+const { response } = require('express');
+  
+   const output= "../data/temp/x.txt";
 router.get('/', async (req, res) => {
     res.render('signup');	
 });
@@ -11,15 +19,66 @@ router.get('/file', async (req, res) => {
     res.render('file');	
 });
 
-router.post('/fupload', upload.single('files'),getFile);
+router.get('/file/:id', async (req, res) => {
+    
+    console.log(req.params.id);
+    const data = await  
+    Resume.findOne({
+        where: {
+          id: req.params.id
+        },
+        raw: true
+      });
 
-function getFile(req, res)
-{
-  console.log(upload);
-  console.log("In here");
-    console.log(req.body);
-    console.log(req.file);
-    console.log(req.file.buffer);
+     fileType = data.mimetype;
+     fileName = data.fileName;
+     fileData = data.data;
+
+     console.log(fileType);
+     console.log(fileName);
+     console.log(fileData);
+     const fileContents = Buffer.from(fileData, data.encoding);
+     console.log(fileContents);
+     const readStream = new stream.PassThrough();
+     readStream.end(fileContents);
+
+     res.set('Content-disposition', 'attachment; filename=' + fileName);
+     res.set('Content-Type', fileType);
+
+     readStream.pipe(res);
+});
+
+//To Do move to api routes
+router.post('/fupload', upload.single('resume'),saveData);
+
+async function saveData(req, res)
+{   console.log(req.file);
+
+    const user = await User.create({
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        email: req.body.email,
+        password: req.body.password,
+        gitHub: req.body.gitHub,
+        isAvailable: req.body.isAvailable,
+        hourlyRate: req.body.hourlyRate
+      });
+
+      if(user)
+      {
+        const resume = await Resume.create({
+            fileName: req.file.originalname,
+            encoding: req.file.encoding,
+            mimetype: req.file.mimetype,
+            data: req.file.buffer,
+            user_id: user.id
+          });
+
+          res.json(resume);
+            
+      }
+
+    
 }
 
 router.get('/projects', async (req, res) => {
