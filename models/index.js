@@ -4,6 +4,8 @@ const Skill = require('./Skill');
 const ProjectSkill = require('./ProjectSkill')
 const UserSkill = require('./UserSkill')
 
+
+
 User.belongsToMany(Skill, {through: UserSkill, foreignKey: 'userId'});
 Skill.belongsToMany(User, {through: UserSkill, foreignKey: 'skillId'});
 
@@ -15,3 +17,4 @@ Skill.belongsToMany(Project, {through: ProjectSkill, foreignKey: 'skillId'});
 // User.belongsTo(Project, {foreignKey:'projectId'});
 
 module.exports = { User, Project, Skill, ProjectSkill, UserSkill };
+
