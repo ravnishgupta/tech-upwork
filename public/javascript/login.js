@@ -12,7 +12,7 @@ const loginHandler = async(req, res) =>{
         const response = await fetch('/api/login',{
             method: 'POST',
             body: JSON.stringify({
-                
+
                 email,
                 password,
                 
@@ -23,8 +23,8 @@ const loginHandler = async(req, res) =>{
         });
 
         if(response.ok)
-        {
-           document.location.reload();
+        {  console.log('Login Successful');
+           document.location.replace('/');
         }
         else{
             console.log(response.statusText);
