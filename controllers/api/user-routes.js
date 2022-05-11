@@ -39,31 +39,11 @@ router.get('/:id', (req, res) => {
     });
 });
 
-// router.post('/', (req, res) => {
-//   // expects {username: 'Lernantino', email: 'lernantino@gmail.com', password: 'password1234'}
-//   User.create({
-//     firstName: req.body.firstName,
-//     lastName: req.body.lastName,
-//     email: req.body.email,
-//     password: req.body.password,
-//     gitHub: req.body.gitHub,
-//     isAvailable: req.body.isAvailable,
-//     hourlyRate: req.body.hourlyRate,
-//     resume: req.body.resume
-//     // Skill:....
-//   })
-//     .then(dbUserData => res.json(dbUserData))
-//     .catch(err => {
-//       console.log(err);
-//       res.status(500).json(err);
-//     });
-// });
-
 router.post('/', (req, res) =>{
   User.create(req.body)
     .then((user) =>{
-      if (req.body.skillId.length) {
-        const userSkillArr = req.body.skillId.map((skillId) => {return{userId: user.id, skillId};});
+      if (req.body.skills.length) {
+        const userSkillArr = req.body.skills.map((skills) => {return{userId: user.id, skills};});
         return UserSkill.bulkCreate(userSkillArr);
       }
        // if no product tags, just respond
