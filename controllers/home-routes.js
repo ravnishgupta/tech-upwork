@@ -127,7 +127,7 @@ router.get('/projects', async (req, res) => {
    res.render('adminprojects', {projects});	
 });
 
-router.get('/projects/:id', async (req, res) => {
+router.get('/showapplicants/:id', async (req, res) => {
 
      const projects=[{
         id:1,
@@ -174,8 +174,8 @@ router.get('/projects/:id', async (req, res) => {
         ]
     }
     ];
-
-    res.render('projects', {projects});	
+   
+    res.render('showapplicants', {projects});	
 });
 
 router.get('/dashboard', async (req, res) => {
