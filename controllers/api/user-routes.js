@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { User, Skill,Resume, UserSkill} = require('../../models');
+const { User, Skill,Resume, UserSkill, Apply} = require('../../models');
 const multer = require("multer");
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
@@ -81,10 +81,27 @@ async function createUser(req, res)
   catch(err)
   {
     console.log(err);
-    res.status(400).json(err);
+    res.status(500).json(err);
   };
 }
 
+router.post('/apply', async (req,res) => {
+
+  try{
+      const response = await Apply.create({
+      projectId : req.body.projectId,
+      userId: req.session.userId  });
+
+      res.status(200).json(response);
+
+  }
+  catch(err)
+  {
+    console.log(err);
+    res.status(500).json(err);
+  }
+   
+})
 
 router.post('/login', (req, res) => {
 
