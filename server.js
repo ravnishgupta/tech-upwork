@@ -23,9 +23,6 @@ app.use(session(sess));
 // const helpers = require('./utils/helpers');
 const hbs = exhbs.create();
 
-
-
-
 //express middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

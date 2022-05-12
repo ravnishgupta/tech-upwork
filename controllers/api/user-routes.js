@@ -46,7 +46,16 @@ router.post('/', (req, res) =>{
         const userSkillArr = req.body.skills.map((skills) => {return{userId: user.id, skills};});
         return UserSkill.bulkCreate(userSkillArr);
       }
-       // if no product tags, just respond
+      
+      req.session.save(() => {
+        req.session.user_id = dbUserData.id;
+        req.session.email = dbUserData.email;
+        req.session.loggedIn = true;
+        
+        res.status(200).json(user);
+      })
+      
+    
        res.status(200).json(user);
     })
     .then((userSkillIds) => res.status(200).json(userSkillIds))
@@ -57,7 +66,7 @@ router.post('/', (req, res) =>{
 });
 
 router.post('/login', (req, res) => {
-  // expects {email: 'lernantino@gmail.com', password: 'password1234'}
+
   User.findOne({
     where: {
       email: req.body.email
@@ -74,9 +83,26 @@ router.post('/login', (req, res) => {
       res.status(400).json({ message: 'Incorrect password!' });
       return;
     }
+    // Session
+    req.session.save(() => {
+      req.session.user_id = dbUserData.id;
+      req.session.email = dbUserData.email;
+      req.session.loggedIn = true;
 
-    res.json({ user: dbUserData, message: 'You are now logged in!' });
+      res.json({ user: dbUserData, message: 'You are now logged in!' });
+    });
   });
+});
+
+router.post('/logout', (req, res) => {
+  if (req.session.loggedIn) {
+    req.session.destroy(() => {
+      res.status(204).end();
+    });
+  }
+  else {
+    res.status(404).end();
+  }
 });
 
 router.put('/:id', (req, res) => {
