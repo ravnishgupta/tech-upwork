@@ -33,7 +33,7 @@ Apply.init(
         timestamps: false,
         freezeTableName: true,
         underscored: false,
-        modelName: 'projectskill'
+        modelName: 'apply'
     }
 )
 module.exports = Apply;
