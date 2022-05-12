@@ -27,7 +27,6 @@ Apply.init(
               key: 'id'
             }
         }
-
     },
     {   sequelize,
         timestamps: false,
