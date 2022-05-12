@@ -8,6 +8,12 @@ const { User, Resume
     //  Skill
    } = require('../models');
 router.get('/', async (req, res) => {
+
+    if(req.session.loggedIn)
+    {
+        res.redirect('/home');
+        return;
+    }
     res.render('login');	
 });
 
@@ -48,38 +54,6 @@ router.get('/file/:id', async (req, res) => {
      readStream.pipe(res);
 });
 
-//To Do move to api routes
-router.post('/fupload', upload.single('resume'),saveData);
-
-async function saveData(req, res)
-{ 
-      const user = await User.create({
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        email: req.body.email,
-        password: req.body.password,
-        gitHub: req.body.gitHub,
-        isAvailable: req.body.isAvailable,
-        hourlyRate: req.body.hourlyRate,
-        userType: req.body.userType
-      });
-
-      if(user)
-      {
-        const resume = await Resume.create({
-            fileName: req.file.originalname,
-            encoding: req.file.encoding,
-            mimetype: req.file.mimetype,
-            data: req.file.buffer,
-            user_id: user.id
-          });
-
-          res.json(resume);
-            
-      }
-
-    
-}
 router.get('/login', async (req, res) => {
     res.render('login');	
 });
@@ -114,16 +88,6 @@ router.get('/home', async (req, res) => {
        skills: ['C#', 'Kubernetes', 'Docker']
    }
    ];
-
-   //console.log(projects);
-
-  /* res.render('projects', {
-       title: "Software Developer Infrastructure- Cloud",
-       description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nemo, nulla saepe beatae sunt quibusdam fuga placeat nam blanditiis laboriosam doloremque incidunt ab cum deleniti dolores tempora ut perferendis quod laborum. Blanditiis sunt accusamus, nulla voluptatem ratione veritatis rerum non fuga saepe dolores perferendis cupiditate adipisci quam fugiat ut sint a!",
-       payPerHour: 50,
-       startDate :'06-01-2022',
-       endDate :'12-31-2022'
-   });	*/
 
    res.render('projects', {projects});	
 });
