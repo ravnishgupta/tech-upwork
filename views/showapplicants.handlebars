@@ -1,20 +1,27 @@
 <div class="bg-white">
    <header >
+         <a  href="/projects"  class=" py-2 px-4 border border-transparent shadow-sm text-sm font-medium 
+                rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 
+                focus:ring-offset-2 focus:ring-indigo-500">Back</a> 
+            <br/>
         <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-            <h1 class="text-3xl font-bold text-gray-900">Talents</h1>
+            
+            <h1 class="text-3xl font-bold text-gray-900">View Applicants</h1>
         </div>
   </header>
    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <section aria-labelledby="talents-heading" class="pt-6 pb-24">
-        <h2 id="talents-heading" class="sr-only">Talents</h2>
+        <h2 id="talents-heading" class="sr-only">Projects</h2>
 
-        <div class="grid grid-cols-1 lg:grid-cols-4 gap-x-8 gap-y-10">
-          <!-- Filter dropdown grid -->
-          {{> dropdown}}
-          
-          <div class="lg:col-span-3">
-           <div id="accordion-open" data-accordion="open">
-              {{#each talents as |talent|}}
+        {{#each projects as |project|}}
+             <div class="p-4 w-full text-left bg-white rounded-lg border shadow-md sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+                <h5 class="mb-2 text-3xl font-bold text-gray-900 dark:text-white">{{project.title}}</h5>
+                <p class="mb-5 text-base text-gray-500 sm:text-lg dark:text-gray-400">{{project.description}}</p>             
+            </div>
+
+
+            <div id="accordion-open" data-accordion="open">
+              {{#each project.users as |talent|}}
                   <h2 id="accordion-open-heading-{{talent.id}}">
                     <button type="button" class="flex justify-between items-center p-5 w-full font-medium text-left text-gray-500 rounded-t-xl border border-b-0 bg-gray-100 border-gray-200 focus:ring-4 focus:ring-gray-200  dark:focus:ring-gray-800 
                                     dark:border-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800" data-accordion-target="#accordion-open-body-{{talent.id}}" aria-expanded="true" aria-controls="accordion-open-body-{{talent.id}}">
@@ -45,11 +52,10 @@
                  
                   </div>
                 {{/each}}
-            </div> 
-          </div>
+         {{/each}}
+           
+          
         </div>
       </section>
     </main>
   </div>
-
-    <script src="/javascript/talents.js"></script>

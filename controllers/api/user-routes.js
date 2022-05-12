@@ -1,5 +1,8 @@
 const router = require('express').Router();
-const { User, Skill, UserSkill} = require('../../models');
+const { User, Skill,Resume, UserSkill} = require('../../models');
+const multer = require("multer");
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 
 // get all users
 router.get('/', (req, res) => {
@@ -39,32 +42,49 @@ router.get('/:id', (req, res) => {
     });
 });
 
-router.post('/', (req, res) =>{
-  User.create(req.body)
-    .then((user) =>{
-      if (req.body.skills.length) {
-        const userSkillArr = req.body.skills.map((skills) => {return{userId: user.id, skills};});
-        return UserSkill.bulkCreate(userSkillArr);
+router.post('/', upload.single('resume'), createUser);
+
+async function createUser(req, res)
+{ 
+  try
+  {
+    const user = await User.create(req.body);
+
+    if(user)
+    {
+      const resume = await Resume.create({
+        fileName: req.file.originalname,
+        encoding: req.file.encoding,
+        mimetype: req.file.mimetype,
+        data: req.file.buffer,
+        user_id: user.id
+      });
+
+      if(req.body.skills.length)
+      {
+        const userSkillArr = req.body.skills.map((skills) => 
+                                {
+                                  return{userId: user.id, skills};
+                                });
+        await UserSkill.bulkCreate(userSkillArr);
       }
       
       req.session.save(() => {
-        req.session.user_id = dbUserData.id;
-        req.session.email = dbUserData.email;
-        req.session.userType = dbUserData.userType;
+        req.session.user_id= user.id;
+        req.session.email = user.email;
+        req.session.userType = user.userType;
         req.session.loggedIn = true;
-        
-        res.status(200).json(user);
-      })
-      
-    
-       res.status(200).json(user);
-    })
-    .then((userSkillIds) => res.status(200).json(userSkillIds))
-    .catch((err) => {
-      console.log(err);
-      res.status(400).json(err);
-    });
-});
+      });
+      res.status(200).json(user);
+    }
+  }
+  catch(err)
+  {
+    console.log(err);
+    res.status(400).json(err);
+  };
+}
+
 
 router.post('/login', (req, res) => {
 

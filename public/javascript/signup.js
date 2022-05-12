@@ -29,11 +29,12 @@ const signUpHandler = async (event)=>{
     formData.append("hourlyRate", hourlyRate);
     formData.append("skills", skills);
     formData.append("resume", resume.files[0]);
+    formData.append("userType", "User");
 
    
     if(firstName && lastName && email && password)
     {
-        const response = await fetch('/fupload',{
+        const response = await fetch('/api/users/',{
             method: 'POST',
             body: formData
         });
