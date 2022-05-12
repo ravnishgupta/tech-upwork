@@ -52,16 +52,16 @@ router.get('/file/:id', async (req, res) => {
 router.post('/fupload', upload.single('resume'),saveData);
 
 async function saveData(req, res)
-{   console.log(req.file);
-
-    const user = await User.create({
+{ 
+      const user = await User.create({
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         email: req.body.email,
         password: req.body.password,
         gitHub: req.body.gitHub,
         isAvailable: req.body.isAvailable,
-        hourlyRate: req.body.hourlyRate
+        hourlyRate: req.body.hourlyRate,
+        userType: req.body.userType
       });
 
       if(user)
