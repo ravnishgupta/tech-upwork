@@ -27,13 +27,12 @@ Apply.init(
               key: 'id'
             }
         }
-
     },
     {   sequelize,
         timestamps: false,
         freezeTableName: true,
         underscored: false,
-        modelName: 'projectskill'
+        modelName: 'apply'
     }
 )
 module.exports = Apply;
