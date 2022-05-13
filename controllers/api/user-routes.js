@@ -86,7 +86,8 @@ async function createUser(req, res)
 }
 
 router.post('/apply', async (req,res) => {
-
+ console.log(req.body);
+ console.log(req.session);
   try{
       const response = await Apply.create({
       projectId : req.body.projectId,

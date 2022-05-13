@@ -32,27 +32,30 @@ router.get('/file/:id', async (req, res) => {
     const data = await  
     Resume.findOne({
         where: {
-          id: req.params.id
+          user_id: req.params.id
         },
         raw: true
       });
 
-     fileType = data.mimetype;
-     fileName = data.fileName;
-     fileData = data.data;
+     if(data){
+        fileType = data.mimetype;
+        fileName = data.fileName;
+        fileData = data.data;
 
-     console.log(fileType);
-     console.log(fileName);
-     console.log(fileData);
-     const fileContents = Buffer.from(fileData, data.encoding);
-     console.log(fileContents);
-     const readStream = new stream.PassThrough();
-     readStream.end(fileContents);
+        console.log(fileType);
+        console.log(fileName);
+        console.log(fileData);
+        const fileContents = Buffer.from(fileData, data.encoding);
+        console.log(fileContents);
+        const readStream = new stream.PassThrough();
+        readStream.end(fileContents);
 
-     res.set('Content-disposition', 'attachment; filename=' + fileName);
-     res.set('Content-Type', fileType);
+        res.set('Content-disposition', 'attachment; filename=' + fileName);
+        res.set('Content-Type', fileType);
 
-     readStream.pipe(res);
+        readStream.pipe(res);
+     }
+     
 });
 
 router.get('/login', async (req, res) => {
