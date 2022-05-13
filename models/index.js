@@ -11,14 +11,25 @@ const Apply = require("./Apply")
 User.belongsToMany(Skill, {through: UserSkill, foreignKey: 'userId'});
 Skill.belongsToMany(User, {through: UserSkill, foreignKey: 'skillId'});
 
-User.belongsToMany(Project, {through: Apply, foreignKey:'userId'});
-Project.belongsToMany(User, {through: Apply, foreignKey: 'projectId'});
+Project.belongsToMany(Skill, {through: ProjectSkill});
+Skill.belongsToMany(Project, {through: ProjectSkill});
 
 
-Project.belongsToMany(Skill, {through: ProjectSkill, foreignKey: 'projectId'});
-Skill.belongsToMany(Project, {through: ProjectSkill, foreignKey: 'skillId'});
 
+User.belongsToMany(Project, 
+            {through: Apply, 
+            foreignKey:'userId'});
+Project.belongsToMany(User, 
+                    {through: Apply, 
+                        foreignKey: 'projectId'});
 
+Apply.belongsTo(User,
+        {foreignKey:'userId'}
+    );
+
+    Apply.belongsTo(Project,
+        {foreignKey:'projectId'}
+    );
 
 Resume.belongsTo(User, 
     {foreignKey: 'user_id'});

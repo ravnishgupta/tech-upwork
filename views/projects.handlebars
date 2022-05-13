@@ -28,8 +28,13 @@
                   <div id="accordion-open-body-{{project.id}}" class="hidden" aria-labelledby="accordion-open-heading-{{project.id}}">
                     <div class="p-5 border border-b-0 border-gray-100 dark:border-gray-700 dark:bg-gray-100">
                       <p class="mb-2 text-gray-500 dark:text-gray-400 bg-white">{{project.description}}</p>
-                      <p class="mb-2 text-gray-800 dark:text-gray-400 bg-white" > Skills: {{project.skills}}</p>
-                      <button data-id="{{project.id}}" type="click" class="py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Apply</button>     
+                      <p class="mb-2 text-gray-800 dark:text-gray-400 bg-white" > Skills :</p>
+                      {{#each project.skills as |skill|}}
+                      <p class="mb-2 text-gray-800 dark:text-gray-400 bg-white" > {{skill.description}}</p>
+                      {{/each}}
+                      <button data-id="{{project.id}}" type="click" id="apply-btn" class="py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white 
+                                                  bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 
+                                                  focus:ring-offset-2 focus:ring-indigo-500">Apply</button>     
                     </div>
                   </div>
                 {{/each}}
@@ -39,3 +44,6 @@
       </section>
     </main>
   </div>
+
+<script src="/javascript/project.js"></script>
+  

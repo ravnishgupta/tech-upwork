@@ -4,9 +4,7 @@ const loginHandler = async(req, res) =>{
     
     const email= document.querySelector('#email-address').value.trim(); 
     const password = document.querySelector('#password').value.trim(); 
-    
 
-   
     if(email && password)
     {
         const response = await fetch('/api/users/login',{
@@ -24,7 +22,7 @@ const loginHandler = async(req, res) =>{
 
         if(response.ok)
         {  console.log('Login Successful');
-           document.location.replace('/projects');
+           document.location.replace('/home');
         }
         else{
             console.log(response.statusText);
