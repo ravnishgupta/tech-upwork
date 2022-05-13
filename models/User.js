@@ -58,7 +58,7 @@ User.init(
           defaultValue: 0
       },
       aboutMe: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(1000),
         allowNull: true
       },
       userType: {

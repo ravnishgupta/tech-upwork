@@ -1,30 +1,43 @@
 use tech_up_work_db;
 
 -- User table
-insert into user (firstName, lastName, email, password, gitHub, isAvailable, hourlyRate)
-values ('Jill', 'Smith', 'js@yahoo.com', 'abc123', 'github.com/js', 0, 200);
+insert into user (firstName, lastName, email, password, gitHub, isAvailable, hourlyRate, aboutMe)
+values ('Jill', 'Smith', 'js@yahoo.com', 'abc123', 'github.com/js', 0, 200,
+'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nemo, nulla saepe beatae sunt quibusdam fuga placeat nam blanditiis laboriosam doloremque incidunt ab cum deleniti dolores tempora ut perferendis quod laborum. Blanditiis sunt accusamus, nulla voluptatem ratione veritatis rerum non fuga saepe dolores perferendis cupiditate adipisci quam fugiat ut sint a!');
 
-insert into user (firstName, lastName, email, password, gitHub, isAvailable, hourlyRate)
-values ('Will', 'Smith', 'ws@yahoo.com', 'slap123', 'github.com/slap', 0, 150);
+insert into user (firstName, lastName, email, password, gitHub, isAvailable, hourlyRate, aboutMe)
+values ('Will', 'Smith', 'ws@yahoo.com', 'slap123', 'github.com/slap', 0, 150,
+'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nemo, nulla saepe beatae sunt quibusdam fuga placeat nam blanditiis laboriosam doloremque incidunt ab cum deleniti dolores tempora ut perferendis quod laborum. Blanditiis sunt accusamus, nulla voluptatem ratione veritatis rerum non fuga saepe dolores perferendis cupiditate adipisci quam fugiat ut sint a!');
 
-insert into user (firstName, lastName, email, password, gitHub, isAvailable, hourlyRate)
-values ('Jill', 'Klein', 'jk@yahoo.com', 'abc123', 'github.com/jk', 0, 200);
+insert into user (firstName, lastName, email, password, gitHub, isAvailable, hourlyRate, aboutMe)
+values ('Jill', 'Klein', 'jk@yahoo.com', 'abc123', 'github.com/jk', 0, 200,
+'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nemo, nulla saepe beatae sunt quibusdam fuga placeat nam blanditiis laboriosam doloremque incidunt ab cum deleniti dolores tempora ut perferendis quod laborum. Blanditiis sunt accusamus, nulla voluptatem ratione veritatis rerum non fuga saepe dolores perferendis cupiditate adipisci quam fugiat ut sint a!');
 
-insert into user (firstName, lastName, email, password, gitHub, isAvailable, hourlyRate)
-values ('Calvin', 'Klein', 'ck@yahoo.com', 'abc123', 'github.com/ck', 0, 200);
+insert into user (firstName, lastName, email, password, gitHub, isAvailable, hourlyRate, aboutMe)
+values ('Calvin', 'Klein', 'ck@yahoo.com', 'abc123', 'github.com/ck', 0, 200,
+'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nemo, nulla saepe beatae sunt quibusdam fuga placeat nam blanditiis laboriosam doloremque incidunt ab cum deleniti dolores tempora ut perferendis quod laborum. Blanditiis sunt accusamus, nulla voluptatem ratione veritatis rerum non fuga saepe dolores perferendis cupiditate adipisci quam fugiat ut sint a!');
 
 -- Project table
 insert into project (title, description, payPerHour, startDate, endDate)
-values ('Full Stack C#', 'Full Stack C#', 100, '2022-01-01', '2022-05-01');
+values ('Software Infrastructure- Cloud', 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nemo, nulla saepe beatae sunt quibusdam fuga placeat nam blanditiis laboriosam doloremque incidunt ab cum deleniti dolores tempora ut perferendis quod laborum. Blanditiis sunt accusamus, nulla voluptatem ratione veritatis rerum non fuga saepe dolores perferendis cupiditate adipisci quam fugiat ut sint a!',
+ 100, '2022-06-01', '2022-12-31');
 
 insert into project (title, description, payPerHour, startDate, endDate)
-values ('Full Stack JS', 'Full Stack JS', 90, '2022-01-01', '2022-12-31');
+values ('Internal applications', 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Repellendus natus aspernatur ab tempore, veritatis hic fugit, illo, provident expedita repellat ipsam? A facilis voluptate, commodi eveniet, totam dicta, pariatur perferendis asperiores architecto repellendus harum molestiae quis qui ipsum veniam fugiat quaerat. Alias enim aliquam possimus omnis ipsum saepe sapiente rem corrupti commodi id. Ratione, dicta iure. Impedit corrupti odit ullam quis minus, earum ipsam aliquid harum sapiente dolor! Quam velit pariatur et sint rem quas, in eveniet iusto, assumenda tempore beatae ipsa eius reprehenderit fuga accusamus animi, praesentium ratione dicta ullam est numquam. Minus ratione, animi aperiam placeat non distinctio!',
+ 140, '2022-05-15', '2023-05-01');
 
 insert into project (title, description, payPerHour, startDate, endDate)
-values ('React Project', 'React Project', 100, '2021-06-01', '2021-12-31');
+values ('Full Stack JS', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores dolores quam tempora quisquam voluptate temporibus laborum quod excepturi incidunt laboriosam!', 
+90, '2022-06-01', '2022-12-31');
 
 insert into project (title, description, payPerHour, startDate, endDate)
-values ('Java Project', 'Java Project', 250, '2021-06-01', '2021-12-31');
+values ('React Project', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores dolores quam tempora quisquam voluptate temporibus laborum quod excepturi incidunt laboriosam!',
+ 100, '2022-06-01', '2022-12-31');
+
+insert into project (title, description, payPerHour, startDate, endDate)
+values ('Java Project', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores dolores quam tempora quisquam voluptate temporibus laborum quod excepturi incidunt laboriosam!',
+ 250, 
+'2022-06-01', '2022-12-31');
 
 -- Skill table
 insert into skill (description)
