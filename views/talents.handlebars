@@ -20,7 +20,7 @@
                                     dark:border-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800" data-accordion-target="#accordion-open-body-{{talent.id}}" aria-expanded="true" aria-controls="accordion-open-body-{{talent.id}}">
                       <span class="flex items-center">
                           <svg class="mr-2 w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" fill-rule="evenodd" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" clip-rule="evenodd"></path></svg>
-                          {{talent.firstname}} {{talent.lastname}}
+                          {{talent.firstName}} {{talent.lastName}}
                           <br/>${{talent.hourlyRate}}/hr
                           <br/>Available : 
                           {{#if talent.isAvailable}}
@@ -35,7 +35,11 @@
                   <div id="accordion-open-body-{{talent.id}}" class="hidden" aria-labelledby="accordion-open-heading-{{talent.id}}">
                     <div class="p-5 border border-b-0 border-gray-100 dark:border-gray-700 dark:bg-gray-100">
                       <p class="mb-2 text-gray-500 dark:text-gray-400 bg-white">{{talent.aboutMe}}</p>
-                      <p class="mb-2 text-gray-800 dark:text-gray-400 bg-white" > Skills: {{talent.skills}}</p>
+                      <p class="mb-2 text-gray-800 dark:text-gray-400 bg-white" > Skills :</p>
+                      {{#each talent.skills as |skill|}}
+                      <p class="mb-2 text-gray-800 dark:text-gray-400 bg-white" > {{skill.description}}</p>
+                      {{/each}}
+                    
                       <div class="flex justify-between">
                         <a href="mailto:{{talent.email}}" data-id="{{talent.id}}" type="click" class="py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 
                                   focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Contact</a>    
