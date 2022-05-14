@@ -18,7 +18,7 @@ const signUpHandler = async (event)=>{
     {   
         skills.push(skillsList[i].label); 
     }
-
+    console.log(resume.files[0]);
     const formData = new FormData();
     formData.append("firstName", firstName);
     formData.append("lastName", lastName);
@@ -49,5 +49,25 @@ const signUpHandler = async (event)=>{
     };
 
  };
+
+
+ function dropHandler(ev) {
+    console.log('File(s) dropped');
+  
+    // Prevent default behavior (Prevent file from being opened)
+    ev.preventDefault();
+  
+    if (ev.dataTransfer.items) {
+       let fileinput=  document.getElementById("file-upload");
+       fileinput.files = ev.dataTransfer.files;
+    }
+  }
+
+  function dragOverHandler(ev) {
+    console.log('File(s) in drop zone');
+  
+    // Prevent default behavior (Prevent file from being opened)
+    ev.preventDefault();
+  }
 
 document.querySelector(".signup-form").addEventListener('submit',signUpHandler);
