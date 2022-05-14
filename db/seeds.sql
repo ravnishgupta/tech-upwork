@@ -179,3 +179,6 @@ values  (2,1);
 
 insert into Apply (userId, projectId)
 values  (3,1);
+
+insert into Apply (userId, projectId)
+values  (1,2);
