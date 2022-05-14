@@ -30,11 +30,12 @@
                   <div id="accordion-open-body-{{talent.id}}" class="hidden" aria-labelledby="accordion-open-heading-{{talent.id}}">
                     <div class="p-5 border border-b-0 border-gray-100 dark:border-gray-700 dark:bg-gray-100">
                       <p class="mb-2 text-gray-500 dark:text-gray-400 bg-white">{{talent.aboutMe}}</p>
-                      <p class="mb-2 text-gray-800 dark:text-gray-400 bg-white" > Skills :</p>
+                      <p class="mb-2 text-gray-800 dark:text-gray-400 bg-white" > Skills :
                       {{#each talent.skills as |skill|}}
-                      <p class="mb-2 text-gray-800 dark:text-gray-400 bg-white" > {{skill.description}}</p>
+                        {{skill.description}} {{#unless @last}}, {{/unless}}
+                        
                       {{/each}}
-                    
+                      </p>
                       <div class="flex justify-between">
                         <a href="mailto:{{talent.email}}" data-id="{{talent.id}}" type="click" class="py-2 px-4 border 
                                   border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 
