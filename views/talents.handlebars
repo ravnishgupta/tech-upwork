@@ -13,7 +13,7 @@
           {{> dropdown}}
           
           <div class="lg:col-span-3">
-           <div id="accordion-open" data-accordion="open">
+           <div id="accordion-open-talent" data-accordion="open">
               {{#each talents as |talent|}}
                   <h2 id="accordion-open-heading-{{talent.id}}">
                     <button type="button" class="flex justify-between items-center p-5 w-full font-medium text-left text-gray-500 rounded-t-xl border border-b-0 bg-gray-100 border-gray-200 focus:ring-4 focus:ring-gray-200  dark:focus:ring-gray-800 
@@ -41,10 +41,12 @@
                       {{/each}}
                     
                       <div class="flex justify-between">
-                        <a href="mailto:{{talent.email}}" data-id="{{talent.id}}" type="click" class="py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 
+                        <a href="mailto:{{talent.email}}" data-id="{{talent.id}}" type="click" class="py-2 px-4 border 
+                                  border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 
+                                  hover:bg-indigo-700 
                                   focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Contact</a>    
-                        <button data-id="{{talent.id}}" type="click" 
-                        class="review-button py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 
+                        <button data-id="{{talent.id}}" type="click" class="review-button py-2 px-4 border border-transparent 
+                        shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 
                         hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Review Resume</button>     
                       </div>
                     </div>

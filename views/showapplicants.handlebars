@@ -12,22 +12,20 @@
    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <section aria-labelledby="talents-heading" class="pt-6 pb-24">
         <h2 id="talents-heading" class="sr-only">Projects</h2>
-
-        {{#each projects as |project|}}
              <div class="p-4 w-full text-left bg-white rounded-lg border shadow-md sm:p-8 dark:bg-gray-800 dark:border-gray-700">
-                <h5 class="mb-2 text-3xl font-bold text-gray-900 dark:text-white">{{project.title}}</h5>
-                <p class="mb-5 text-base text-gray-500 sm:text-lg dark:text-gray-400">{{project.description}}</p>             
+                <h5 class="mb-2 text-3xl font-bold text-gray-900 dark:text-white">{{projects.title}}</h5>
+                <p class="mb-5 text-base text-gray-500 sm:text-lg dark:text-gray-400">{{projects.description}}</p>             
             </div>
 
 
             <div id="accordion-open" data-accordion="open">
-              {{#each project.users as |talent|}}
+              {{#each projects.users as |talent|}}
                   <h2 id="accordion-open-heading-{{talent.id}}">
                     <button type="button" class="flex justify-between items-center p-5 w-full font-medium text-left text-gray-500 rounded-t-xl border border-b-0 bg-gray-100 border-gray-200 focus:ring-4 focus:ring-gray-200  dark:focus:ring-gray-800 
                                     dark:border-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800" data-accordion-target="#accordion-open-body-{{talent.id}}" aria-expanded="true" aria-controls="accordion-open-body-{{talent.id}}">
                       <span class="flex items-center">
                           <svg class="mr-2 w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" fill-rule="evenodd" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" clip-rule="evenodd"></path></svg>
-                          {{talent.firstname}} {{talent.lastname}}
+                          {{talent.firstName}} {{talent.lastName}}
                           <br/>${{talent.hourlyRate}}/hr
                           <br/>Available : 
                           {{#if talent.isAvailable}}
@@ -52,9 +50,7 @@
                  
                   </div>
                 {{/each}}
-         {{/each}}
-           
-          
+      
         </div>
       </section>
     </main>
