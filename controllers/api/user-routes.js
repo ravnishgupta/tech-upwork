@@ -62,7 +62,7 @@ async function createUser(req, res)
 
       if(req.body.skills.length)
       {
-        const userSkillArr = req.body.skills.map((skills) => 
+        const userSkillArr = await req.body.skills.map((skills) => 
                                 {
                                   return{userId: user.id, skills};
                                 });

@@ -11,14 +11,14 @@ const signUpHandler = async (event)=>{
 
     //To do implement file save
     const resume =document.getElementById("file-upload");
-    let skills =[];
+
 `   `
-    const skillsList = document.getElementById('skill').selectedOptions;
-    for(var i=0; i< skillsList.length; i++)
-    {   
-        skills.push(skillsList[i].label); 
-    }
-    console.log(resume.files[0]);
+    //const skillsList = document.getElementById('skill').selectedOptions;
+    const select = document.getElementById('skill');
+    const skills = [...select.selectedOptions]
+                    .map(option => option.value);
+    
+    console.log(skills);
     const formData = new FormData();
     formData.append("firstName", firstName);
     formData.append("lastName", lastName);
