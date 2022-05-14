@@ -20,7 +20,16 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/signup', async (req, res) => {
-    res.render('signup');	
+    let skills = await  Skill.findAll();
+    if(skills)
+    {
+        skills = skills.map(p => p.get({ plain: true}));
+        res.render('signup',{skills});	
+    }
+    else{
+        res.render('signup');
+    }
+   	
 });
 
 router.get('/file', async (req, res) => {

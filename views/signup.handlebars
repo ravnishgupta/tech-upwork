@@ -51,9 +51,18 @@
                 </div>
 
                 <div class="col-span-6 sm:col-span-4">
-                  {{> skills}}
-                </div>
+
+                  <label class="block text-left text-sm font-medium text-gray-700" style="max-width: 300px">
+                  <span class="text-gray-700">Skills:</span>
+                   
+                    <select class="form-multiselect block w-full mt-1" id="skill" multiple>
+                      {{#each skills as |skill|}}
+                          <option value={{skill.id}}>{{skill.description}}</option>
+                        {{/each}}
+                    </select>
                 
+                  </label>
+                </div>
 
                 <div class="col-span-6 sm:col-span-4">
                   <label for="about" class="block text-sm font-medium text-gray-700"> About </label>
