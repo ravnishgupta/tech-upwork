@@ -8,11 +8,6 @@
         <section aria-labelledby="talents-heading" class="pt-6 pb-24">
         <h2 id="talents-heading" class="sr-only">Talents</h2>
 
-        <div class="grid grid-cols-1 lg:grid-cols-4 gap-x-8 gap-y-10">
-          <!-- Filter dropdown grid -->
-          {{> dropdown}}
-          
-          <div class="lg:col-span-3">
            <div id="accordion-open-talent" data-accordion="open">
               {{#each talents as |talent|}}
                   <h2 id="accordion-open-heading-{{talent.id}}">
@@ -53,8 +48,7 @@
                  
                   </div>
                 {{/each}}
-            </div> 
-          </div>
+         
         </div>
       </section>
     </main>

@@ -7,7 +7,7 @@ const stream = require("stream");
 const { User, Resume, Project,Skill, ProjectSkill, Apply } = require('../models');
 const 
 sequelize  = require('../config/connection');
-const { title } = require('process');
+
 
 router.get('/', async (req, res) => {
 
@@ -70,8 +70,8 @@ router.get('/home', async (req, res) => {
    if(projects)
    {
     projects = projects.map(p => p.get({ plain: true}));
-      
-   }
+  
+   };
 
    res.render('projects', {projects});	
 });
