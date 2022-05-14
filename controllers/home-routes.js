@@ -7,6 +7,7 @@ const stream = require("stream");
 const { User, Resume, Project,Skill, ProjectSkill, Apply } = require('../models');
 const 
 sequelize  = require('../config/connection');
+const { title } = require('process');
 
 router.get('/', async (req, res) => {
 
@@ -78,7 +79,14 @@ router.get('/home', async (req, res) => {
 
 router.get('/projects', async (req, res) => {
 
-   let projects = await Project.findAll({ include: [Skill, User] });
+   let projects = await Project.findAll({ attributes:['id', 'title',
+            'description',
+            'payPerHour',
+            'startDate',
+            'endDate',
+            [sequelize.literal('(SELECT COUNT(*) FROM apply where apply.projectId = project.id)'),'applicant_count']
+            ],
+       include: [Skill, User] });
 
    if(projects)
    {
@@ -91,10 +99,17 @@ router.get('/projects', async (req, res) => {
 
 router.get('/showapplicants/:id', async (req, res) => {
 
-    let projects = await Project.findOne({ 
-                                 where:{
-                                     id: req.params.id
-                                 },
+    let projects = await Project.findOne({
+                                where:{
+                                    id: req.params.id
+                                },
+                                 attributes:['id', 'title',
+                                   'description',
+                                   'payPerHour',
+                                   'startDate',
+                                   'endDate',
+                                   [sequelize.literal('(SELECT COUNT(*) FROM apply where apply.projectId = project.id)'),'applicant_count']
+                                ],
                                  include: [Skill, User] });
     
     if(projects)
