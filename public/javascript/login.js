@@ -1,4 +1,5 @@
-const loginHandler = async(req, res) =>{
+// const loginHandler = async(req, res) =>
+async function loginHandler(event) {
     event.preventDefault();
 
     
@@ -15,9 +16,7 @@ const loginHandler = async(req, res) =>{
                 password,
                 
             }),
-            headers: {
-                'Content-Type': 'application/json'
-            }
+            headers: {'Content-Type': 'application/json'}
         });
 
         if(response.ok)
