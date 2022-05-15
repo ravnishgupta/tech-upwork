@@ -43,7 +43,7 @@ const signUpHandler = async (event)=>{
 
         if(response.ok)
         {
-            document.location.replace('/projects');
+            document.location.replace('/home');
         }
         else{
             console.log(response.statusText);
