@@ -91,7 +91,7 @@ router.post('/apply', async (req,res) => {
   try{
       const response = await Apply.create({
       projectId : req.body.projectId,
-      userId: req.session.userId  });
+      userId: req.session.user_id  });
 
       res.status(200).json(response);
 
