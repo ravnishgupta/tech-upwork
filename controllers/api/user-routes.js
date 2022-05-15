@@ -43,7 +43,7 @@ router.get('/:id', (req, res) => {
 });
 
 //Return resume file for the specific user
-router.get('/resume/:id', async (req, res) => {
+router.get('/resume/:id', async (req, res) => { 
   try{
       //A user has one resume saved. Return the resume for selected user.
       //The file data is returned in the raw format.
@@ -80,52 +80,6 @@ router.get('/resume/:id', async (req, res) => {
   }
   
 });
-
-router.post('/', upload.single('resume'), createUser);
-
-async function createUser(req, res)
-{ 
-  try
-  {
-    const user = await User.create(req.body);
-    console.log(req.body);
-    let newskills = [];
-
-    if(user)
-    {
-      const resume = await Resume.create({
-        fileName: req.file.originalname,
-        encoding: req.file.encoding,
-        mimetype: req.file.mimetype,
-        data: req.file.buffer,
-        user_id: user.id
-      });
- 
-      newskills = req.body.skills;
-      if(newskills.length)
-      {
-        const userSkillArr = await newskills.map((skills) => 
-                                {
-                                  return{userId: user.id, skillId: skills};
-                                });
-        await UserSkill.bulkCreate(userSkillArr);
-      }
-      
-      req.session.save(() => {
-        req.session.user_id= user.id;
-        req.session.email = user.email;
-        req.session.userType = user.userType;
-        req.session.loggedIn = true;
-      });
-      res.status(200).json(user);
-    }
-  }
-  catch(err)
-  {
-    console.log(err);
-    res.status(500).json(err);
-  };
-}
 
 router.post('/apply', async (req,res) => {
  console.log(req.body);
@@ -186,6 +140,55 @@ router.post('/logout', (req, res) => {
     res.status(404).end();
   }
 });
+
+router.post('/', upload.single('resume'), createUser);
+
+async function createUser(req, res)
+{ 
+  try
+  {
+    const user = await User.create(req.body);
+    console.log(req.body);
+    let newskills = [];
+
+    if(user)
+    {
+      if(req.file)
+      {
+        const resume = await Resume.create({
+          fileName: req.file.originalname,
+          encoding: req.file.encoding,
+          mimetype: req.file.mimetype,
+          data: req.file.buffer,
+          user_id: user.id
+        });
+      };
+      
+      newskills = req.body.skills;
+      if(newskills)
+      {
+        const userSkillArr = await newskills.map((skills) => 
+                                {
+                                  return{userId: user.id, skillId: skills};
+                                });
+        await UserSkill.bulkCreate(userSkillArr);
+      }
+      
+      req.session.save(() => {
+        req.session.user_id= user.id;
+        req.session.email = user.email;
+        req.session.userType = user.userType;
+        req.session.loggedIn = true;
+      });
+      res.status(200).json(user);
+    }
+  }
+  catch(err)
+  {
+    console.log(err);
+    res.status(500).json(err);
+  };
+}
 
 router.put('/:id', (req, res) => {
   User.update(req.body, {
