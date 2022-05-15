@@ -49,6 +49,8 @@ async function createUser(req, res)
   try
   {
     const user = await User.create(req.body);
+    console.log(req.body);
+    let newskills = [];
 
     if(user)
     {
@@ -59,12 +61,13 @@ async function createUser(req, res)
         data: req.file.buffer,
         user_id: user.id
       });
-
-      if(req.body.skills.length)
+ 
+      newskills = req.body.skills;
+      if(newskills.length)
       {
-        const userSkillArr = await req.body.skills.map((skills) => 
+        const userSkillArr = await newskills.map((skills) => 
                                 {
-                                  return{userId: user.id, skills};
+                                  return{userId: user.id, skillId: skills};
                                 });
         await UserSkill.bulkCreate(userSkillArr);
       }

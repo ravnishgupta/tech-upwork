@@ -8,7 +8,7 @@ const signUpHandler = async (event)=>{
     const gitHub = document.querySelector('#company-website').value.trim(); 
     const isAvailable = document.querySelector('#availableCheckbox').checked; 
     const hourlyRate = document.querySelector('#price').value.trim(); 
-
+    const aboutMe = document.querySelector('#about').value.trim();
     //To do implement file save
     const resume =document.getElementById("file-upload");
 
@@ -17,8 +17,7 @@ const signUpHandler = async (event)=>{
     const select = document.getElementById('skill');
     const skills = [...select.selectedOptions]
                     .map(option => option.value);
-    
-    console.log(skills);
+
     const formData = new FormData();
     formData.append("firstName", firstName);
     formData.append("lastName", lastName);
@@ -27,10 +26,13 @@ const signUpHandler = async (event)=>{
     formData.append("gitHub", gitHub);
     formData.append("isAvailable", isAvailable);
     formData.append("hourlyRate", hourlyRate);
-    formData.append("skills", skills);
     formData.append("resume", resume.files[0]);
     formData.append("userType", "User");
+    formData.append("aboutMe", aboutMe);
 
+    //For passing array via formdata pass each array item using append separately.
+    //Else it will be converted to a comma separated list.
+    skills.forEach(sk => formData.append("skills", sk));
    
     if(firstName && lastName && email && password)
     {
