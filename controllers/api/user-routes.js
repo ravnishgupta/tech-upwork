@@ -42,6 +42,45 @@ router.get('/:id', (req, res) => {
     });
 });
 
+//Return resume file for the specific user
+router.get('/resume/:id', async (req, res) => {
+  try{
+      //A user has one resume saved. Return the resume for selected user.
+      //The file data is returned in the raw format.
+      const data = await  
+
+      Resume.findOne({
+          where: {
+            user_id: req.params.id
+          },
+          raw: true
+        });
+
+        //The data is send as a stream to the ui javascript code to handle.
+      if(data){
+          fileType = data.mimetype;
+          fileName = data.fileName;
+          fileData = data.data;
+          
+          const fileContents = Buffer.from(fileData, data.encoding);
+          console.log(fileContents);
+          const readStream = new stream.PassThrough();
+          readStream.end(fileContents);
+
+          res.set('Content-disposition', 'attachment; filename=' + fileName);
+          res.set('Content-Type', fileType);
+
+          readStream.pipe(res);
+        };
+  }
+  catch(err)
+  {
+    console.log(err);
+    res.status(500).json(err);   
+  }
+  
+});
+
 router.post('/', upload.single('resume'), createUser);
 
 async function createUser(req, res)

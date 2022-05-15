@@ -32,42 +32,6 @@ router.get('/signup', async (req, res) => {
    	
 });
 
-router.get('/file', async (req, res) => {
-    res.render('file');	
-});
-
-router.get('/file/:id', async (req, res) => {
-    
-    console.log(req.params.id);
-    const data = await  
-    Resume.findOne({
-        where: {
-          user_id: req.params.id
-        },
-        raw: true
-      });
-
-     if(data){
-        fileType = data.mimetype;
-        fileName = data.fileName;
-        fileData = data.data;
-
-        console.log(fileType);
-        console.log(fileName);
-        console.log(fileData);
-        const fileContents = Buffer.from(fileData, data.encoding);
-        console.log(fileContents);
-        const readStream = new stream.PassThrough();
-        readStream.end(fileContents);
-
-        res.set('Content-disposition', 'attachment; filename=' + fileName);
-        res.set('Content-Type', fileType);
-
-        readStream.pipe(res);
-     }
-     
-});
-
 router.get('/login', async (req, res) => {
     res.render('login');	
 });

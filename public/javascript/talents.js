@@ -11,7 +11,7 @@ const resumeButtonHandler = async (event) =>{
 
         if(userId)
         {
-            const response = await fetch(`/file/${userId}`);
+            const response = await fetch(`api/users/resume/${userId}`);
             console.log(response);
 
             if(response.ok)
