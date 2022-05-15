@@ -174,12 +174,16 @@ async function createUser(req, res)
         await UserSkill.bulkCreate(userSkillArr);
       }
       
+      /*
       req.session.save(() => {
+        console.log('Printing session');
+        console.log(req.session);
+
         req.session.user_id= user.id;
         req.session.email = user.email;
         req.session.userType = user.userType;
         req.session.loggedIn = true;
-      });
+      });*/
       res.status(200).json(user);
     }
   }
