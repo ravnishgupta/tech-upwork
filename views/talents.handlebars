@@ -8,12 +8,7 @@
         <section aria-labelledby="talents-heading" class="pt-6 pb-24">
         <h2 id="talents-heading" class="sr-only">Talents</h2>
 
-        <div class="grid grid-cols-1 lg:grid-cols-4 gap-x-8 gap-y-10">
-          <!-- Filter dropdown grid -->
-          {{> dropdown}}
-          
-          <div class="lg:col-span-3">
-           <div id="accordion-open" data-accordion="open">
+           <div id="accordion-open-talent" data-accordion="open">
               {{#each talents as |talent|}}
                   <h2 id="accordion-open-heading-{{talent.id}}">
                     <button type="button" class="flex justify-between items-center p-5 w-full font-medium text-left text-gray-500 rounded-t-xl border border-b-0 bg-gray-100 border-gray-200 focus:ring-4 focus:ring-gray-200  dark:focus:ring-gray-800 
@@ -35,24 +30,26 @@
                   <div id="accordion-open-body-{{talent.id}}" class="hidden" aria-labelledby="accordion-open-heading-{{talent.id}}">
                     <div class="p-5 border border-b-0 border-gray-100 dark:border-gray-700 dark:bg-gray-100">
                       <p class="mb-2 text-gray-500 dark:text-gray-400 bg-white">{{talent.aboutMe}}</p>
-                      <p class="mb-2 text-gray-800 dark:text-gray-400 bg-white" > Skills :</p>
+                      <p class="mb-2 text-gray-800 dark:text-gray-400 bg-white" > Skills :
                       {{#each talent.skills as |skill|}}
-                      <p class="mb-2 text-gray-800 dark:text-gray-400 bg-white" > {{skill.description}}</p>
+                        {{skill.description}} {{#unless @last}}, {{/unless}}
+                        
                       {{/each}}
-                    
+                      </p>
                       <div class="flex justify-between">
-                        <a href="mailto:{{talent.email}}" data-id="{{talent.id}}" type="click" class="py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 
+                        <a href="mailto:{{talent.email}}" data-id="{{talent.id}}" type="click" class="py-2 px-4 border 
+                                  border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 
+                                  hover:bg-indigo-700 
                                   focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Contact</a>    
-                        <button data-id="{{talent.id}}" type="click" 
-                        class="review-button py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 
+                        <button data-id="{{talent.id}}" type="click" class="review-button py-2 px-4 border border-transparent 
+                        shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 
                         hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Review Resume</button>     
                       </div>
                     </div>
                  
                   </div>
                 {{/each}}
-            </div> 
-          </div>
+         
         </div>
       </section>
     </main>

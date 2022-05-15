@@ -8,6 +8,7 @@ const { User, Resume, Project,Skill, ProjectSkill, Apply } = require('../models'
 const 
 sequelize  = require('../config/connection');
 
+
 router.get('/', async (req, res) => {
 
     if(req.session.loggedIn)
@@ -19,7 +20,16 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/signup', async (req, res) => {
-    res.render('signup');	
+    let skills = await  Skill.findAll();
+    if(skills)
+    {
+        skills = skills.map(p => p.get({ plain: true}));
+        res.render('signup',{skills});	
+    }
+    else{
+        res.render('signup');
+    }
+   	
 });
 
 router.get('/file', async (req, res) => {
@@ -69,8 +79,8 @@ router.get('/home', async (req, res) => {
    if(projects)
    {
     projects = projects.map(p => p.get({ plain: true}));
-      
-   }
+  
+   };
 
    res.render('projects', {projects});	
 });
@@ -78,7 +88,14 @@ router.get('/home', async (req, res) => {
 
 router.get('/projects', async (req, res) => {
 
-   let projects = await Project.findAll({ include: [Skill, User] });
+   let projects = await Project.findAll({ attributes:['id', 'title',
+            'description',
+            'payPerHour',
+            'startDate',
+            'endDate',
+            [sequelize.literal('(SELECT COUNT(*) FROM apply where apply.projectId = project.id)'),'applicant_count']
+            ],
+       include: [Skill, User] });
 
    if(projects)
    {
@@ -91,78 +108,41 @@ router.get('/projects', async (req, res) => {
 
 router.get('/showapplicants/:id', async (req, res) => {
 
-     const projects=[{
-        id:1,
-        title: "Software Developer Infrastructure- Cloud",
-        description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nemo, nulla saepe beatae sunt quibusdam fuga placeat nam blanditiis laboriosam doloremque incidunt ab cum deleniti dolores tempora ut perferendis quod laborum. Blanditiis sunt accusamus, nulla voluptatem ratione veritatis rerum non fuga saepe dolores perferendis cupiditate adipisci quam fugiat ut sint a!",
-        payPerHour: 50,
-        startDate :'06-01-2022',
-        endDate :'12-31-2022',
-        skills: ['C#', 'Kubernetes', 'Docker'],
-        users: [
-            {
-                id:1,
-                firstname: "Terry",
-                lastname: "Pratchett",
-                email: "fake2@email.com",
-                gitHub :"fake2@email.com",
-                isAvailable :true,
-                hourlyRate: 60,
-                aboutMe: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nemo, nulla saepe beatae sunt quibusdam fuga placeat nam blanditiis laboriosam doloremque incidunt ab cum deleniti dolores tempora ut perferendis quod laborum. Blanditiis sunt accusamus, nulla voluptatem ratione veritatis rerum non fuga saepe dolores perferendis cupiditate adipisci quam fugiat ut sint a!",
-                skills: ['C#', 'Kubernetes', 'Docker']
-            },
-            {
-                id:2,
-                firstname: "Brandon",
-                lastname: "Mull",
-                email: "fake1@email.com",
-                gitHub :"fake1@email.com",
-                isAvailable :true,
-                hourlyRate: 65.75,
-                aboutMe: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Repellendus natus aspernatur ab tempore, veritatis hic fugit, illo, provident expedita repellat ipsam? A facilis voluptate, commodi eveniet, totam dicta, pariatur perferendis asperiores architecto repellendus harum molestiae quis qui ipsum veniam fugiat quaerat. Alias enim aliquam possimus omnis ipsum saepe sapiente rem corrupti commodi id. Ratione, dicta iure. Impedit corrupti odit ullam quis minus, earum ipsam aliquid harum sapiente dolor! Quam velit pariatur et sint rem quas, in eveniet iusto, assumenda tempore beatae ipsa eius reprehenderit fuga accusamus animi, praesentium ratione dicta ullam est numquam. Minus ratione, animi aperiam placeat non distinctio!",
-                skills: ['C#', 'Kubernetes', 'Docker']
-            },
-            {
-                id:3,
-                firstname: "Elizabeth",
-                lastname: "Peters",
-                email: "fake3@email.com",
-                gitHub :"fake3@email.com",
-                isAvailable :false,
-                hourlyRate: 100,
-                aboutMe: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Repellendus natus aspernatur ab tempore, veritatis hic fugit, illo, provident expedita repellat ipsam? A facilis voluptate, commodi eveniet, totam dicta, pariatur perferendis asperiores architecto repellendus harum molestiae quis qui ipsum veniam fugiat quaerat. Alias enim aliquam possimus omnis ipsum saepe sapiente rem corrupti commodi id. Ratione, dicta iure. Impedit corrupti odit ullam quis minus, earum ipsam aliquid harum sapiente dolor! Quam velit pariatur et sint rem quas, in eveniet iusto, assumenda tempore beatae ipsa eius reprehenderit fuga accusamus animi, praesentium ratione dicta ullam est numquam. Minus ratione, animi aperiam placeat non distinctio!",
-                skills: ['C#', 'Kubernetes', 'Docker']
-            }
-        ]
+    let projects = await Project.findOne({
+                                where:{
+                                    id: req.params.id
+                                },
+                                 attributes:['id', 'title',
+                                   'description',
+                                   'payPerHour',
+                                   'startDate',
+                                   'endDate',
+                                   [sequelize.literal('(SELECT COUNT(*) FROM apply where apply.projectId = project.id)'),'applicant_count']
+                                ],
+                                 include: [Skill, User] });
+    
+    if(projects)
+    {
+        projects = projects.get({ plain: true});
+        
     }
-    ];
-   
+    console.log(projects);
     res.render('showapplicants', {projects});	
 });
 
 router.get('/dashboard', async (req, res) => {
 
-    const projects=[{
-       id:1,
-       title: "Software Developer Infrastructure- Cloud",
-       description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nemo, nulla saepe beatae sunt quibusdam fuga placeat nam blanditiis laboriosam doloremque incidunt ab cum deleniti dolores tempora ut perferendis quod laborum. Blanditiis sunt accusamus, nulla voluptatem ratione veritatis rerum non fuga saepe dolores perferendis cupiditate adipisci quam fugiat ut sint a!",
-       payPerHour: 50,
-       startDate :'06-01-2022',
-       endDate :'12-31-2022',
-       skills: ['C#', 'Kubernetes', 'Docker']
-   },
-   {
-       id:2,
-       title: "Senior Manager- Internal applications",
-       description: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Repellendus natus aspernatur ab tempore, veritatis hic fugit, illo, provident expedita repellat ipsam? A facilis voluptate, commodi eveniet, totam dicta, pariatur perferendis asperiores architecto repellendus harum molestiae quis qui ipsum veniam fugiat quaerat. Alias enim aliquam possimus omnis ipsum saepe sapiente rem corrupti commodi id. Ratione, dicta iure. Impedit corrupti odit ullam quis minus, earum ipsam aliquid harum sapiente dolor! Quam velit pariatur et sint rem quas, in eveniet iusto, assumenda tempore beatae ipsa eius reprehenderit fuga accusamus animi, praesentium ratione dicta ullam est numquam. Minus ratione, animi aperiam placeat non distinctio!",
-       payPerHour: 80,
-       startDate :'05-15-2022',
-       endDate :'05-15-2023'        ,
-       skills: ['C#', 'Kubernetes', 'Docker']
-   }
-   ];
+   let user = await User.findOne({
+                    attributes: { exclude: ['password'] },
+                    where: {
+                    id: req.session.user_id
+                    },
+                    include: [Project]
+                });
+   user = user.get({ plain: true});
+   console.log(user);
 
-   res.render('dashboard', {projects});	
+   res.render('dashboard', {user});	
 });
 
 router.get('/talents', async (req, res) => {

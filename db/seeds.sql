@@ -168,3 +168,17 @@ values (1,4);
 
 insert into projectskill (skillid, projectId)
 values (2,4);
+
+-- Apply table
+-- project id 1
+insert into Apply (userId, projectId)
+values  (1,1);
+
+insert into Apply (userId, projectId)
+values  (2,1);
+
+insert into Apply (userId, projectId)
+values  (3,1);
+
+insert into Apply (userId, projectId)
+values  (1,2);

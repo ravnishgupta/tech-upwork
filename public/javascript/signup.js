@@ -8,16 +8,15 @@ const signUpHandler = async (event)=>{
     const gitHub = document.querySelector('#company-website').value.trim(); 
     const isAvailable = document.querySelector('#availableCheckbox').checked; 
     const hourlyRate = document.querySelector('#price').value.trim(); 
-
+    const aboutMe = document.querySelector('#about').value.trim();
     //To do implement file save
     const resume =document.getElementById("file-upload");
-    let skills =[];
+
 `   `
-    const skillsList = document.getElementById('skill').selectedOptions;
-    for(var i=0; i< skillsList.length; i++)
-    {   
-        skills.push(skillsList[i].label); 
-    }
+    //const skillsList = document.getElementById('skill').selectedOptions;
+    const select = document.getElementById('skill');
+    const skills = [...select.selectedOptions]
+                    .map(option => option.value);
 
     const formData = new FormData();
     formData.append("firstName", firstName);
@@ -27,10 +26,13 @@ const signUpHandler = async (event)=>{
     formData.append("gitHub", gitHub);
     formData.append("isAvailable", isAvailable);
     formData.append("hourlyRate", hourlyRate);
-    formData.append("skills", skills);
     formData.append("resume", resume.files[0]);
     formData.append("userType", "User");
+    formData.append("aboutMe", aboutMe);
 
+    //For passing array via formdata pass each array item using append separately.
+    //Else it will be converted to a comma separated list.
+    skills.forEach(sk => formData.append("skills", sk));
    
     if(firstName && lastName && email && password)
     {
@@ -41,7 +43,7 @@ const signUpHandler = async (event)=>{
 
         if(response.ok)
         {
-            document.location.replace('/projects');
+            document.location.replace('/home');
         }
         else{
             console.log(response.statusText);
@@ -49,5 +51,25 @@ const signUpHandler = async (event)=>{
     };
 
  };
+
+
+ function dropHandler(ev) {
+    console.log('File(s) dropped');
+  
+    // Prevent default behavior (Prevent file from being opened)
+    ev.preventDefault();
+  
+    if (ev.dataTransfer.items) {
+       let fileinput=  document.getElementById("file-upload");
+       fileinput.files = ev.dataTransfer.files;
+    }
+  }
+
+  function dragOverHandler(ev) {
+    console.log('File(s) in drop zone');
+  
+    // Prevent default behavior (Prevent file from being opened)
+    ev.preventDefault();
+  }
 
 document.querySelector(".signup-form").addEventListener('submit',signUpHandler);
