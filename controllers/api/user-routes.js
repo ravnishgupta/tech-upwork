@@ -1,6 +1,8 @@
 const router = require('express').Router();
 const { User, Skill,Resume, UserSkill, Apply} = require('../../models');
 const multer = require("multer");
+const fs = require("fs");
+const stream = require("stream");
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
@@ -44,6 +46,7 @@ router.get('/:id', (req, res) => {
 
 //Return resume file for the specific user
 router.get('/resume/:id', async (req, res) => { 
+  console.log("call here");
   try{
       //A user has one resume saved. Return the resume for selected user.
       //The file data is returned in the raw format.
@@ -55,7 +58,7 @@ router.get('/resume/:id', async (req, res) => {
           },
           raw: true
         });
-
+      console.log(data);
         //The data is send as a stream to the ui javascript code to handle.
       if(data){
           fileType = data.mimetype;
