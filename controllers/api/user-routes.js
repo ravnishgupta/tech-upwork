@@ -42,51 +42,44 @@ router.get('/:id', (req, res) => {
     });
 });
 
-router.post('/', upload.single('resume'), createUser);
+//Return resume file for the specific user
+router.get('/resume/:id', async (req, res) => { 
+  try{
+      //A user has one resume saved. Return the resume for selected user.
+      //The file data is returned in the raw format.
+      const data = await  
 
-async function createUser(req, res)
-{ 
-  try
-  {
-    const user = await User.create(req.body);
-    console.log(req.body);
-    let newskills = [];
+      Resume.findOne({
+          where: {
+            user_id: req.params.id
+          },
+          raw: true
+        });
 
-    if(user)
-    {
-      const resume = await Resume.create({
-        fileName: req.file.originalname,
-        encoding: req.file.encoding,
-        mimetype: req.file.mimetype,
-        data: req.file.buffer,
-        user_id: user.id
-      });
- 
-      newskills = req.body.skills;
-      if(newskills.length)
-      {
-        const userSkillArr = await newskills.map((skills) => 
-                                {
-                                  return{userId: user.id, skillId: skills};
-                                });
-        await UserSkill.bulkCreate(userSkillArr);
-      }
-      
-      req.session.save(() => {
-        req.session.user_id= user.id;
-        req.session.email = user.email;
-        req.session.userType = user.userType;
-        req.session.loggedIn = true;
-      });
-      res.status(200).json(user);
-    }
+        //The data is send as a stream to the ui javascript code to handle.
+      if(data){
+          fileType = data.mimetype;
+          fileName = data.fileName;
+          fileData = data.data;
+          
+          const fileContents = Buffer.from(fileData, data.encoding);
+          console.log(fileContents);
+          const readStream = new stream.PassThrough();
+          readStream.end(fileContents);
+
+          res.set('Content-disposition', 'attachment; filename=' + fileName);
+          res.set('Content-Type', fileType);
+
+          readStream.pipe(res);
+        };
   }
   catch(err)
   {
     console.log(err);
-    res.status(500).json(err);
-  };
-}
+    res.status(500).json(err);   
+  }
+  
+});
 
 router.post('/apply', async (req,res) => {
  console.log(req.body);
@@ -147,6 +140,59 @@ router.post('/logout', (req, res) => {
     res.status(404).end();
   }
 });
+
+router.post('/', upload.single('resume'), createUser);
+
+async function createUser(req, res)
+{ 
+  try
+  {
+    const user = await User.create(req.body);
+    console.log(req.body);
+    let newskills = [];
+
+    if(user)
+    {
+      if(req.file)
+      {
+        const resume = await Resume.create({
+          fileName: req.file.originalname,
+          encoding: req.file.encoding,
+          mimetype: req.file.mimetype,
+          data: req.file.buffer,
+          user_id: user.id
+        });
+      };
+      
+      newskills = req.body.skills;
+      if(newskills)
+      {
+        const userSkillArr = await newskills.map((skills) => 
+                                {
+                                  return{userId: user.id, skillId: skills};
+                                });
+        await UserSkill.bulkCreate(userSkillArr);
+      }
+      
+      /*
+      req.session.save(() => {
+        console.log('Printing session');
+        console.log(req.session);
+
+        req.session.user_id= user.id;
+        req.session.email = user.email;
+        req.session.userType = user.userType;
+        req.session.loggedIn = true;
+      });*/
+      res.status(200).json(user);
+    }
+  }
+  catch(err)
+  {
+    console.log(err);
+    res.status(500).json(err);
+  };
+}
 
 router.put('/:id', (req, res) => {
   User.update(req.body, {

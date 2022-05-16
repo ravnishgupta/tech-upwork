@@ -5,7 +5,7 @@ const upload = multer({ storage: storage });
 const fs = require("fs");
 const stream = require("stream");
 const { User, Resume, Project,Skill, ProjectSkill, Apply } = require('../models');
-const 
+const withAuth = require('../utils/auth');
 sequelize  = require('../config/connection');
 
 
@@ -20,6 +20,7 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/signup', async (req, res) => {
+    
     let skills = await  Skill.findAll();
     if(skills)
     {
@@ -32,47 +33,20 @@ router.get('/signup', async (req, res) => {
    	
 });
 
-router.get('/file', async (req, res) => {
-    res.render('file');	
-});
-
-router.get('/file/:id', async (req, res) => {
-    
-    console.log(req.params.id);
-    const data = await  
-    Resume.findOne({
-        where: {
-          user_id: req.params.id
-        },
-        raw: true
-      });
-
-     if(data){
-        fileType = data.mimetype;
-        fileName = data.fileName;
-        fileData = data.data;
-
-        console.log(fileType);
-        console.log(fileName);
-        console.log(fileData);
-        const fileContents = Buffer.from(fileData, data.encoding);
-        console.log(fileContents);
-        const readStream = new stream.PassThrough();
-        readStream.end(fileContents);
-
-        res.set('Content-disposition', 'attachment; filename=' + fileName);
-        res.set('Content-Type', fileType);
-
-        readStream.pipe(res);
-     }
-     
-});
-
 router.get('/login', async (req, res) => {
-    res.render('login');	
+    if(req.session.loggedIn)
+    {
+        res.render('/projects');
+        return;
+    }
+    else
+    {
+        res.render('login');	
+    };
+    
 });
 
-router.get('/home', async (req, res) => {
+router.get('/home',withAuth ,async (req, res) => {
 
    let projects = await Project.findAll({ include: [Skill, User] });
 
@@ -86,7 +60,7 @@ router.get('/home', async (req, res) => {
 });
 
 
-router.get('/projects', async (req, res) => {
+router.get('/projects',withAuth ,async (req, res) => {
 
    let projects = await Project.findAll({ attributes:['id', 'title',
             'description',
@@ -106,7 +80,7 @@ router.get('/projects', async (req, res) => {
    res.render('adminprojects', {projects});	
 });
 
-router.get('/showapplicants/:id', async (req, res) => {
+router.get('/showapplicants/:id', withAuth ,async (req, res) => {
 
     let projects = await Project.findOne({
                                 where:{
@@ -130,7 +104,7 @@ router.get('/showapplicants/:id', async (req, res) => {
     res.render('showapplicants', {projects});	
 });
 
-router.get('/dashboard', async (req, res) => {
+router.get('/dashboard', withAuth,async (req, res) => {
 
    let user = await User.findOne({
                     attributes: { exclude: ['password'] },
@@ -145,7 +119,7 @@ router.get('/dashboard', async (req, res) => {
    res.render('dashboard', {user});	
 });
 
-router.get('/talents', async (req, res) => {
+router.get('/talents',withAuth, async (req, res) => {
 
     let talents = await User.findAll({ include: [Skill] });
 
