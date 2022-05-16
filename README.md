@@ -60,5 +60,8 @@ SO THAT I can publish my professional information and look for jobs
 - Monetization capabilities by providing tiered subscriptions 
 
 ## Screenshots 
+Deployed application : 
+https://ancient-reef-53037.herokuapp.com/
+
 
 ![Screenshot of the application](./public/images/Tech%20Up%20Work.png)
