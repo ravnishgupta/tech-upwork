@@ -84,13 +84,26 @@ router.get('/resume/:id', async (req, res) => {
 router.post('/apply', async (req,res) => {
  console.log(req.body);
  console.log(req.session);
-  try{
-      const response = await Apply.create({
-      projectId : req.body.projectId,
-      userId: req.session.user_id  });
 
-      res.status(200).json(response);
+   try{
+      const lookup = await Apply.findOne({
+            where: {
+              projectId: req.body.projectId,
+              userId: req.session.user_id 
+            }
+      });
 
+      if(!lookup){
+        const response = await Apply.create({
+          projectId : req.body.projectId,
+          userId: req.session.user_id  });
+
+          res.status(200).json(response);
+      }
+      else{
+        res.status(200).json(lookup);
+      }
+      
   }
   catch(err)
   {

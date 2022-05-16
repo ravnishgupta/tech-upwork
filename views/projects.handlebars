@@ -1,3 +1,5 @@
+<!-- From this view users can applyu for projects. It will list all available projects
+in the db as of now.-->
 <div class="bg-white">
    <header >
         <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
@@ -8,7 +10,7 @@
         <section aria-labelledby="talents-heading" class="pt-6 pb-24">
         <h2 id="talents-heading" class="sr-only">Projects</h2>
 
-           <div id="accordion-open" data-accordion="open">
+           <div class="projects-apply" id="accordion-open" data-accordion="open">
               {{#each projects as |project|}}
                   <h2 id="accordion-open-heading-{{project.id}}">
                     <button type="button" class="flex justify-between items-center p-5 w-full font-medium text-left text-gray-500 rounded-t-xl border border-b-0 bg-gray-100 border-gray-200 focus:ring-4 focus:ring-gray-200  dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800" data-accordion-target="#accordion-open-body-{{project.id}}" aria-expanded="true" aria-controls="accordion-open-body-{{project.id}}">
@@ -28,7 +30,8 @@
                         {{skill.description}} {{#unless @last}}, {{/unless}}
                       {{/each}}
                       </p>
-                      <button data-id="{{project.id}}" type="click" id="apply-btn" class="py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white 
+                      <!--Data-id has the project id and will be used an apply table record -->
+                      <button data-id="{{project.id}}" type="click"  class="apply-button py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white 
                                                   bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 
                                                   focus:ring-offset-2 focus:ring-indigo-500">Apply</button>     
                     </div>
