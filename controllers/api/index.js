@@ -1,5 +1,6 @@
 const router = require('express').Router();
 
+//Create api routes
 const userRoutes = require('./user-routes.js');
 const projectRoutes = require('./project-routes');
 const skillsRoutes = require('./skills-routes.js');

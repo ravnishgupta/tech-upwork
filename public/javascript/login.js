@@ -1,4 +1,4 @@
-// const loginHandler = async(req, res) =>
+
 async function loginHandler(event) {
     event.preventDefault();
 
