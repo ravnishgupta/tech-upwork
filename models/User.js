@@ -2,7 +2,11 @@ const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
 const bcrypt = require('bcrypt');
 
-class User extends Model {}
+class User extends Model {
+  checkPassword(loginPw) {
+    return bcrypt.compareSync(loginPw, this.password);
+  }
+}
 
 User.init(
     {
@@ -12,8 +16,12 @@ User.init(
         primaryKey: true,
         autoIncrement: true
       },
-      username: {
-        type: DataTypes.STRING,
+      firstName : {
+        type : DataTypes.STRING(30),
+        allowNull: false
+      },
+      lastName : {
+        type : DataTypes.STRING(30),
         allowNull: false
       },
       email: {
@@ -31,7 +39,7 @@ User.init(
           len: [4]
         }
       },
-      github: {
+      gitHub: {
           type: DataTypes.STRING(30),
           allowNull: false,
           unique: true,
@@ -44,14 +52,18 @@ User.init(
         allowNull: false,
         defaultValue: 1 //available by default
       },
-      chargePerHour: {
+      hourlyRate: {
           type: DataTypes.FLOAT,
           allowNull: false,
           defaultValue: 0
       },
-      skillSet: {
-          type: DataTypes.JSON,
-          allowNull: false
+      aboutMe: {
+        type: DataTypes.STRING(1000),
+        allowNull: true
+      },
+      userType: {
+        type: DataTypes.STRING,
+        allowNull: true
       }
     },
 
@@ -67,11 +79,11 @@ User.init(
             } 
              
         },
-        
+
         sequelize,
         timestamps: false,
         freezeTableName: true,
-        underscored: true,
+        underscored: false,
         modelName: 'user'
       }
   );

@@ -16,7 +16,7 @@ Project.init(
             allowNull: false,
         },
         description: {
-            type: DataTypes.STRING(255),
+            type: DataTypes.STRING(1000),
             allowNull: false
         },
         payPerHour: {
@@ -31,19 +31,15 @@ Project.init(
         endDate: {
             type: DataTypes.DATEONLY,
             allowNull: false
-        },
-        skillRequired: {
-            type: DataTypes.JSON,
-            allowNull: false
         }
     },
         {   
             sequelize,
             timestamps: false,
             freezeTableName: true,
-            underscored: true,
+            underscored: false,
             modelName: 'project'
         }
 )
 
-module.exports = project;
+module.exports = Project;
